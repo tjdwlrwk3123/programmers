@@ -68,4 +68,33 @@ public class Day8 {
         }
         return answer;
     }
+	
+	public static int solution3(int[][] board, int[] moves) {
+        ArrayList<Integer> list=new ArrayList<Integer>();
+        for(int i=0;i<moves.length;i++){
+            for(int j=0;j<board.length;j++){
+                if(board[j][moves[i]-1]!=0){
+                    list.add(board[j][moves[i]-1]);
+                    board[j][moves[i]-1]=0;
+                    break;
+                }
+            }
+        }
+        int answer = 0;
+        for(int i=1;i<list.size();i++){
+            if(list.get(i)==list.get(i-1)){
+                list.remove(i);
+                list.remove(i-1);
+                answer+=2;
+                i=0; //i를 1로 하면 for문이 끝나면서 i가 올라가기때문에 0으로 해주고 바로 1로 시작하게 만듦
+            }
+        }
+        return answer;
+    }
+	public static void main(String[] args) {
+		int[][] board={{0, 0, 1, 0, 0}, {0, 0, 1, 0, 0}, {0, 2, 1, 0, 0}, {0, 2, 1, 0, 0}, {0, 2, 1, 0, 0}};
+		int[] moves={1, 2, 3, 3, 2, 3, 1};
+		int a=solution3(board,moves);
+		System.out.println(a);
+	}
 }
