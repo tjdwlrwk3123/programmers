@@ -3,7 +3,7 @@ package programmers;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Day9 {
+public class Day09 {
 	/*
 	/////////////////문자열 내 마음대로 정렬하기///////////////////
 	

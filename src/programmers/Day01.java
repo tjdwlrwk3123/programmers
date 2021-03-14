@@ -23,7 +23,7 @@ package programmers;
  */
 import java.util.ArrayList;
 
-class Day1 {
+class Day01 {
     public int[] solution(int[] numbers) {
         ArrayList<Integer> arr=new ArrayList<Integer>();
         int count=0;

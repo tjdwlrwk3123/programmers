@@ -32,7 +32,7 @@ answers	return
 
 
 
-class Day3 {
+class Day03 {
     public int[] solution(int[] answers) {
         int[] asolv={1,2,3,4,5};
         int[] bsolv={2,1,2,3,2,4,2,5};

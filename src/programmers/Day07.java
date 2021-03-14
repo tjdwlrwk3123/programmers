@@ -3,7 +3,7 @@ package programmers;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Day7 {
+public class Day07 {
 	/*
 	////////////////////나누어 떨어지는 숫자 배열/////////////////
 	

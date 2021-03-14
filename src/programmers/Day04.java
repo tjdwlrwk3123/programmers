@@ -25,7 +25,7 @@ array								commands				return
 import java.util.ArrayList;
 import java.util.Collections;
 
-class Day4 {
+class Day04 {
     public int[] solution(int[] array, int[][] commands) {
         int[] answer= new int[commands.length];
         for(int i=0;i<commands.length;i++){

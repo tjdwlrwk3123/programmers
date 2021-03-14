@@ -26,7 +26,7 @@ n	lost	reserve		return
 3	[3]		[1]			2
 
  */
-public class Day6 {
+public class Day06 {
 	public int solution1(int n, int[] lost, int[] reserve) {
         int firstLost=n-lost.length; //체육복을 가지고있는 사람의 수
         for(int i=0;i<lost.length;i++){

@@ -22,7 +22,7 @@ participant / completion / return
  */
 
 //통과한 코드(sort를 사용해서 for문을 한번만 돌림)
-class Day2 {
+class Day02 {
     public String solution(String[] participant, String[] completion) {
         String answer = "";
         boolean last=true;

@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.lang.Exception;
 
-class Day5 {
+class Day05 {
     public String solution(int a, int b) {
         String date="2016-"+a+"-"+b;
         SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");

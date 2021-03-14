@@ -2,7 +2,7 @@ package programmers;
 
 import java.util.ArrayList;
 
-public class Day8 {
+public class Day08 {
 	/*
 	/////////////////같은 숫자는 싫어///////////////////
 	
