@@ -103,7 +103,7 @@ public class Week3 {
             answer=new int[1];
             answer[0]=-1;
         }else{
-            int[] arr2=arr.clone();
+            int[] arr2=arr.clone(); //깊은복사(원본을 변경해도 바뀌지 복사본이 바뀌지 않음)
             Arrays.sort(arr2);
             answer=new int[arr.length-1];
             boolean find=false;
@@ -111,12 +111,12 @@ public class Week3 {
                 if(find){
                     answer[i]=arr[i+1];
                 }else{
-                    if(arr[i]==arr2[0]){
+                    if(arr[i]==arr2[0]){ //가장 작은수를 찾았으면
                         answer[i]=arr[i+1];
-                        find=true;
+                        find=true; //find를 true로 바꿔서 이 다음부터는 answer[i]=arr[i+1]이 되게 함
                         continue;
                     }
-                    answer[i]=arr[i];
+                    answer[i]=arr[i]; //가장 작은수를 찾기전
                 }
             }
         }
