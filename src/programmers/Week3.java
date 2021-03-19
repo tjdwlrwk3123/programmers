@@ -1,5 +1,7 @@
 package programmers;
 
+import java.util.Arrays;
+
 public class Week3 {
 	/*
 	/////////////////////////비밀지도///////////////////////
@@ -49,6 +51,76 @@ public class Week3 {
             }
             answer[i]=ans.toString(); //StringBuilder를 스트링으로 형변환
         }
+        return answer;
+    }
+	/*
+	/////////////////////하샤드의 수//////////////////
+	
+	양의 정수 x가 하샤드 수이려면 x의 자릿수의 합으로 x가 나누어져야 합니다. 
+	예를 들어 18의 자릿수 합은 1+8=9이고, 18은 9로 나누어 떨어지므로 18은 하샤드 수입니다. 
+	자연수 x를 입력받아 x가 하샤드 수인지 아닌지 검사하는 함수, solution을 완성해주세요.
+
+	제한 조건
+	x는 1 이상, 10000 이하인 정수입니다.
+	
+	입출력 예
+	arr	return
+	10	true
+	12	true
+	11	false
+	13	false
+	 */
+	public boolean day16_1(int x) {
+        boolean answer = true;
+        String num=x+"";
+        int harsa=0;
+        for(int i=0;i<num.length();i++){
+            harsa+=Integer.parseInt(num.substring(i,i+1));
+        }
+        if(x%harsa!=0){
+            answer=false;
+        }
+        return answer;
+    }
+	/*
+	////////////////////제일 작은 수 제거하기///////////////////
+	
+	정수를 저장한 배열, arr 에서 가장 작은 수를 제거한 배열을 리턴하는 함수, solution을 완성해주세요. 
+	단, 리턴하려는 배열이 빈 배열인 경우엔 배열에 -1을 채워 리턴하세요. 
+	예를들어 arr이 [4,3,2,1]인 경우는 [4,3,2]를 리턴 하고, [10]면 [-1]을 리턴 합니다.
+
+	제한 조건
+	arr은 길이 1 이상인 배열입니다.
+	인덱스 i, j에 대해 i ≠ j이면 arr[i] ≠ arr[j] 입니다.
+	입출력 예
+	arr			return
+	[4,3,2,1]	[4,3,2]
+	[10]		[-1]
+	 */
+	public int[] day16_2(int[] arr) {
+        int[] answer={};
+        if(arr.length==1){
+            answer=new int[1];
+            answer[0]=-1;
+        }else{
+            int[] arr2=arr.clone();
+            Arrays.sort(arr2);
+            answer=new int[arr.length-1];
+            boolean find=false;
+            for(int i=0;i<answer.length;i++){
+                if(find){
+                    answer[i]=arr[i+1];
+                }else{
+                    if(arr[i]==arr2[0]){
+                        answer[i]=arr[i+1];
+                        find=true;
+                        continue;
+                    }
+                    answer[i]=arr[i];
+                }
+            }
+        }
+        
         return answer;
     }
 }
