@@ -4,32 +4,32 @@ import java.util.Arrays;
 
 public class Week3 {
 	/*
-	/////////////////////////�������///////////////////////
+	/////////////////////////비밀지도///////////////////////
 	
-	�׿��� ��� ���ε��� ������ ���ܳ��� ��Ҹ� �˷��� ��������� �տ� �־���. 
-	�׷��� �� ��������� ���ڷ� ��ȣȭ�Ǿ� �־� ��ġ�� Ȯ���ϱ� ���ؼ��� ��ȣ�� �ص��ؾ� �Ѵ�. ������ ���� ��ȣ�� �ص��� ����� ������� �޸� �Բ� �߰��ߴ�.
+	네오는 평소 프로도가 비상금을 숨겨놓는 장소를 알려줄 비밀지도를 손에 넣었다. 
+	그런데 이 비밀지도는 숫자로 암호화되어 있어 위치를 확인하기 위해서는 암호를 해독해야 한다. 다행히 지도 암호를 해독할 방법을 적어놓은 메모도 함께 발견했다.
 
-	1.������ �� ���� ���̰� n�� ���簢�� �迭 ���·�, �� ĭ�� "����"(" ") �Ǵ� "��"("#") �� ������ �̷���� �ִ�.
-	2.��ü ������ �� ���� ������ ���ļ� ���� �� �ִ�. ���� "���� 1"�� "���� 2"��� ����. 
-	���� 1 �Ǵ� ���� 2 �� ��� �ϳ��� ���� �κ��� ��ü ���������� ���̴�. ���� 1�� ���� 2���� ��� ������ �κ��� ��ü ���������� �����̴�.
-	3."���� 1"�� "���� 2"�� ���� ���� �迭�� ��ȣȭ�Ǿ� �ִ�.
-	4.��ȣȭ�� �迭�� ������ �� �����ٿ��� �� �κ��� 1, ���� �κ��� 0���� ��ȣȭ���� �� ������� �������� �ش��ϴ� ���� �迭�̴�.
+	1.지도는 한 변의 길이가 n인 정사각형 배열 형태로, 각 칸은 "공백"(" ") 또는 "벽"("#") 두 종류로 이루어져 있다.
+	2.전체 지도는 두 장의 지도를 겹쳐서 얻을 수 있다. 각각 "지도 1"과 "지도 2"라고 하자. 
+	지도 1 또는 지도 2 중 어느 하나라도 벽인 부분은 전체 지도에서도 벽이다. 지도 1과 지도 2에서 모두 공백인 부분은 전체 지도에서도 공백이다.
+	3."지도 1"과 "지도 2"는 각각 정수 배열로 암호화되어 있다.
+	4.암호화된 배열은 지도의 각 가로줄에서 벽 부분을 1, 공백 부분을 0으로 부호화했을 때 얻어지는 이진수에 해당하는 값의 배열이다.
 	
-	������ ��������� �ص��Ͽ� '#', �������� ������ ���ڿ� �迭�� ����϶�.
+	원래의 비밀지도를 해독하여 '#', 공백으로 구성된 문자열 배열로 출력하라.
 	
-	����� ����
-	�Ű�����	��
+	입출력 예제
+	매개변수	값
 	n		5
 	arr1	[9, 20, 28, 18, 11]
 	arr2	[30, 1, 21, 17, 28]
-	���		["#####","# # #", "### #", "# ##", "#####"]
+	출력		["#####","# # #", "### #", "# ##", "#####"]
 	
 	 */
 	public String[] day15(int n, int[] arr1, int[] arr2) {
         String[] answer = new String[n];
         for(int i=0;i<arr1.length;i++){
-            String bin=Integer.toBinaryString(arr1[i]); //2���� ���ڿ��� �ٲٱ�
-            bin=bin.format("%0"+n+"d",Long.parseLong(bin)); //Long������ �ٲ��� �տ� �ڸ��� ä��� (1001->01001)
+            String bin=Integer.toBinaryString(arr1[i]); //2진수 문자열로 바꾸기
+            bin=bin.format("%0"+n+"d",Long.parseLong(bin)); //Long형으로 바꾼후 앞에 자릿수 채우기 (1001->01001)
             answer[i]="";
             for(int j=0;j<bin.length();j++){
                 if(bin.substring(j,j+1).equals("1")){
@@ -43,27 +43,27 @@ public class Week3 {
         for(int i=0;i<arr2.length;i++){
             String bin=Integer.toBinaryString(arr2[i]);
             bin=bin.format("%0"+n+"d",Long.parseLong(bin));
-            StringBuilder ans=new StringBuilder(answer[i]); //���ڿ��� ġȯ�ϱ� ���ؼ� ��Ʈ������ Ŭ���� ���
+            StringBuilder ans=new StringBuilder(answer[i]); //문자열을 치환하기 위해서 스트링빌더 클래스 사용
             for(int j=0;j<bin.length();j++){
                 if(bin.substring(j,j+1).equals("1")){
-                    ans.setCharAt(j,'#'); //��Ʈ�������� �޼ҵ�(j��° �ε����� char�� '#'�� �ٲٱ�)
+                    ans.setCharAt(j,'#'); //스트링빌더의 메소드(j번째 인덱스의 char를 '#'로 바꾸기)
                 }
             }
-            answer[i]=ans.toString(); //StringBuilder�� ��Ʈ������ ����ȯ
+            answer[i]=ans.toString(); //StringBuilder를 스트링으로 형변환
         }
         return answer;
     }
 	/*
-	/////////////////////�ϻ����� ��//////////////////
+	/////////////////////하샤드의 수//////////////////
 	
-	���� ���� x�� �ϻ��� ���̷��� x�� �ڸ����� ������ x�� ���������� �մϴ�. 
-	���� ��� 18�� �ڸ��� ���� 1+8=9�̰�, 18�� 9�� ������ �������Ƿ� 18�� �ϻ��� ���Դϴ�. 
-	�ڿ��� x�� �Է¹޾� x�� �ϻ��� ������ �ƴ��� �˻��ϴ� �Լ�, solution�� �ϼ����ּ���.
+	양의 정수 x가 하샤드 수이려면 x의 자릿수의 합으로 x가 나누어져야 합니다. 
+	예를 들어 18의 자릿수 합은 1+8=9이고, 18은 9로 나누어 떨어지므로 18은 하샤드 수입니다. 
+	자연수 x를 입력받아 x가 하샤드 수인지 아닌지 검사하는 함수, solution을 완성해주세요.
 
-	���� ����
-	x�� 1 �̻�, 10000 ������ �����Դϴ�.
+	제한 조건
+	x는 1 이상, 10000 이하인 정수입니다.
 	
-	����� ��
+	입출력 예
 	arr	return
 	10	true
 	12	true
@@ -83,16 +83,16 @@ public class Week3 {
         return answer;
     }
 	/*
-	////////////////////���� ���� �� �����ϱ�///////////////////
+	////////////////////제일 작은 수 제거하기///////////////////
 	
-	������ ������ �迭, arr ���� ���� ���� ���� ������ �迭�� �����ϴ� �Լ�, solution�� �ϼ����ּ���. 
-	��, �����Ϸ��� �迭�� �� �迭�� ��쿣 �迭�� -1�� ä�� �����ϼ���. 
-	������� arr�� [4,3,2,1]�� ���� [4,3,2]�� ���� �ϰ�, [10]�� [-1]�� ���� �մϴ�.
+	정수를 저장한 배열, arr 에서 가장 작은 수를 제거한 배열을 리턴하는 함수, solution을 완성해주세요. 
+	단, 리턴하려는 배열이 빈 배열인 경우엔 배열에 -1을 채워 리턴하세요. 
+	예를들어 arr이 [4,3,2,1]인 경우는 [4,3,2]를 리턴 하고, [10]면 [-1]을 리턴 합니다.
 
-	���� ����
-	arr�� ���� 1 �̻��� �迭�Դϴ�.
-	�ε��� i, j�� ���� i �� j�̸� arr[i] �� arr[j] �Դϴ�.
-	����� ��
+	제한 조건
+	arr은 길이 1 이상인 배열입니다.
+	인덱스 i, j에 대해 i ≠ j이면 arr[i] ≠ arr[j] 입니다.
+	입출력 예
 	arr			return
 	[4,3,2,1]	[4,3,2]
 	[10]		[-1]
@@ -103,7 +103,7 @@ public class Week3 {
             answer=new int[1];
             answer[0]=-1;
         }else{
-            int[] arr2=arr.clone(); //��������(������ �����ص� �ٲ��� ���纻�� �ٲ��� ����)
+            int[] arr2=arr.clone(); //깊은복사(원본을 변경해도 바뀌지 복사본이 바뀌지 않음)
             Arrays.sort(arr2);
             answer=new int[arr.length-1];
             boolean find=false;
@@ -111,16 +111,55 @@ public class Week3 {
                 if(find){
                     answer[i]=arr[i+1];
                 }else{
-                    if(arr[i]==arr2[0]){ //���� �������� ã������
+                    if(arr[i]==arr2[0]){ //가장 작은수를 찾았으면
                         answer[i]=arr[i+1];
-                        find=true; //find�� true�� �ٲ㼭 �� �������ʹ� answer[i]=arr[i+1]�� �ǰ� ��
+                        find=true; //find를 true로 바꿔서 이 다음부터는 answer[i]=arr[i+1]이 되게 함
                         continue;
                     }
-                    answer[i]=arr[i]; //���� �������� ã����
+                    answer[i]=arr[i]; //가장 작은수를 찾기전
                 }
             }
         }
         
+        return answer;
+    }
+	/*
+	//////////////////////////콜라츠 추측/////////////////////////
+	
+	1937년 Collatz란 사람에 의해 제기된 이 추측은, 주어진 수가 1이 될때까지 다음 작업을 반복하면, 모든 수를 1로 만들 수 있다는 추측입니다. 
+	작업은 다음과 같습니다.
+
+	1-1. 입력된 수가 짝수라면 2로 나눕니다. 
+	1-2. 입력된 수가 홀수라면 3을 곱하고 1을 더합니다.
+	2. 결과로 나온 수에 같은 작업을 1이 될 때까지 반복합니다.
+	예를 들어, 입력된 수가 6이라면 6→3→10→5→16→8→4→2→1 이 되어 총 8번 만에 1이 됩니다. 
+	위 작업을 몇 번이나 반복해야하는지 반환하는 함수, solution을 완성해 주세요. 단, 작업을 500번을 반복해도 1이 되지 않는다면 –1을 반환해 주세요.
+	
+	제한 사항
+	입력된 수, num은 1 이상 8000000 미만인 정수입니다.
+	입출력 예
+	n		result
+	6		8
+	16		4
+	626331	-1
+	 */
+	public int day17_1(int num) {
+        int answer = 0;
+        long n=(long)num; //3배를 하는중에 int범위를 넘어가게 됨
+        if(n==1){ //num이 1일경우 바로 끝
+            return 0;
+        }
+        for(int i=1;i<=500;i++){
+            if(n%2==0){
+                n/=2;
+                if(n==1){ //짝수일때만 1이 될 가능성이 생기기때문에 1인지를 여기서 테스트
+                    return i;
+                }
+            }else{
+                n=n*3+1;
+            }
+        }
+        answer=-1;
         return answer;
     }
 }
