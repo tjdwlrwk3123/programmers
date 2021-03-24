@@ -1,6 +1,16 @@
 package programmers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 public class Week3 {
 	/*
@@ -288,5 +298,59 @@ public class Week3 {
             answer=-1;
         }
         return answer;
+    }
+	
+	public static int[] day21(int N, int[] stages) {
+        int[] answer = new int[N];
+        
+        Arrays.sort(stages);
+        int tried=stages.length;
+        int clearP=0;
+        int stage=1;
+        int cnt=0;
+        HashMap<Integer,Double> map=new HashMap<Integer,Double>();
+        for(int j=0;j<N;j++){
+            int failed=0;
+            double failure=0.0;
+            for(int i=clearP;i<stages.length;i++){
+                if(stage==stages[i]){
+                	System.out.println("같아");
+                    failed++;
+                    cnt++;
+                }else{
+                    failure=(double)failed/tried;
+                    System.out.println("실패율:"+failure);
+                    break;
+                }
+            }
+            System.out.println("////////////");
+            map.put(stage,failure);
+            tried=tried-failed;
+            clearP=cnt;
+            stage++;
+        }
+        
+        Iterator<Integer> it= sortByValue(map).iterator();
+        int i=0;
+        while(it.hasNext()) {
+        	answer[i]=it.next();
+        }
+        
+        return answer;
+    }
+	
+	public static List<Integer> sortByValue(final Map<Integer, Double> map){
+        List<Integer> list = new ArrayList<Integer>();
+        list.addAll(map.keySet());
+        Collections.sort(list,new Comparator<Object>(){
+			@SuppressWarnings("unchecked")
+			public int compare(Object o1,Object o2){
+                Object v1 = map.get(o1);
+                Object v2 = map.get(o2);                
+                return ((Comparable<Object>) v1).compareTo(v2);
+            }
+        });
+        Collections.reverse(list); // 주석시 오름차순
+        return list;
     }
 }
