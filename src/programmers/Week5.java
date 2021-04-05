@@ -206,7 +206,7 @@ public class Week5 {
 					}else if(o1<o2) {
 						return 1;
 					}else {
-						if(Long.parseLong(a+b)>=Long.parseLong(b+a)) {
+						if(Long.parseLong(a+b)>Long.parseLong(b+a)) {
 							return -1;
 						}else {
 							return 1;
@@ -219,7 +219,7 @@ public class Week5 {
 					}else if(o1<o2) {
 						return 1;
 					}else {
-						if(Long.parseLong(a+b)>=Long.parseLong(b+a)) {
+						if(Long.parseLong(a+b)>Long.parseLong(b+a)) {
 							return -1;
 						}else {
 							return 1;
@@ -239,10 +239,5 @@ public class Week5 {
     	}
     	return answer;
     }
-    public static void main(String[] args) {
-    	int[] numbers= {999,996,949,293,142,666,515,151};
-		String aa=day31_2(numbers);
-		System.out.println(aa);
-	}
 }
 
