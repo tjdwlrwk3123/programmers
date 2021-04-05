@@ -1,6 +1,9 @@
 package programmers;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -126,6 +129,120 @@ public class Week5 {
 	        this.progress=progress;
 	        this.speed=speed;
 	    }
+	}
+	/*
+	0 또는 양의 정수가 주어졌을 때, 정수를 이어 붙여 만들 수 있는 가장 큰 수를 알아내 주세요.
+
+	예를 들어, 주어진 정수가 [6, 10, 2]라면 [6102, 6210, 1062, 1026, 2610, 2106]를 만들 수 있고, 이중 가장 큰 수는 6210입니다.
+	
+	0 또는 양의 정수가 담긴 배열 numbers가 매개변수로 주어질 때, 
+	순서를 재배치하여 만들 수 있는 가장 큰 수를 문자열로 바꾸어 return 하도록 solution 함수를 작성해주세요.
+	
+	제한 사항
+	numbers의 길이는 1 이상 100,000 이하입니다.
+	numbers의 원소는 0 이상 1,000 이하입니다.
+	정답이 너무 클 수 있으니 문자열로 바꾸어 return 합니다.
+	입출력 예
+	numbers	return
+	[6, 10, 2]	"6210"
+	[3, 30, 34, 5, 9]	"9534330"
+	 */
+	//1번풀이 : 재귀함수를 이용하여 모든 수를 추출한 후 비교(시간복잡도가 너무 커서 비효율적)
+	static ArrayList<String> numList=new ArrayList<String>();
+    
+    public static String day31_1(int[] numbers) {
+        String answer = "";
+        ArrayList<String> arr=new ArrayList<String>();
+        for(int i=0;i<numbers.length;i++){
+            arr.add(numbers[i]+"");
+        }
+        ArrayList<String> result=new ArrayList<String>();
+        
+        ArrayList<String> list=reculsion(arr,result,arr.size());
+        BigInteger a=new BigInteger(list.get(0));
+        for(int i=1;i<list.size();i++){
+            BigInteger b=new BigInteger(list.get(i));
+            if(b.compareTo(a)==1){
+                a=b;
+            }
+        }
+        answer=a.toString();
+        return answer;
+    }
+    
+    public static ArrayList<String> reculsion(ArrayList<String> arr,ArrayList<String> result,int n){
+        if( n == 0 ) {
+            String num="";
+            for(int i=0;i<result.size();i++){
+                num+=result.get(i);
+            }
+            numList.add(num);
+        }
+        for( int i=0; i<n; i++){
+            result.add(arr.remove(i));
+            reculsion(arr, result, n - 1);
+			arr.add(i, result.remove(result.size() - 1));
+        }
+        return numList;
+    }
+    //2번풀이(compare 오버라이딩)
+    public static String day31_2(int[] numbers) {
+    	String answer="";
+    	ArrayList<Integer> list=new ArrayList<Integer>();
+    	for (int i=0;i<numbers.length;i++) {
+    		list.add(numbers[i]);
+    	}
+    	Collections.sort(list, new Comparator<Integer>() {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				String a=o1+"";
+				String b=o2+"";
+				System.out.println(a+"/"+b);
+				if(o1>o2) {
+					System.out.println(a.substring(0, b.length()));
+					o1=Integer.parseInt(a.substring(0, b.length()));
+					if(o1>o2) {
+						return -1;
+					}else if(o1<o2) {
+						return 1;
+					}else {
+						if(Long.parseLong(a+b)>=Long.parseLong(b+a)) {
+							return -1;
+						}else {
+							return 1;
+						}
+					}
+				}else if(o1<o2) {
+					o2=Integer.parseInt(b.substring(0, a.length()));
+					if(o1>o2) {
+						return -1;
+					}else if(o1<o2) {
+						return 1;
+					}else {
+						if(Long.parseLong(a+b)>=Long.parseLong(b+a)) {
+							return -1;
+						}else {
+							return 1;
+						}
+					}
+				}else {
+					return 0;
+				}
+			}
+		});
+    	
+    	for(int i=0;i<list.size();i++) {
+    		answer+=list.get(i)+"/";
+    	}
+    	if(answer.substring(0,1).equals("0")) {
+    		return "0";
+    	}
+    	return answer;
+    }
+    public static void main(String[] args) {
+    	int[] numbers= {999,996,949,293,142,666,515,151};
+		String aa=day31_2(numbers);
+		System.out.println(aa);
 	}
 }
 
