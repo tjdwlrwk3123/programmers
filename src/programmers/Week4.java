@@ -181,17 +181,14 @@ public class Week4 {
 	["123","456","789"]					true
 	["12","123","1235","567","88"]		false
 	 */
-	public boolean day26(String[] phone_book) {
+	public boolean day26_day32(String[] phone_book) {
         boolean answer = true;
         Arrays.sort(phone_book);
-        A:for(int i=0;i<phone_book.length;i++){
-            for(int j=i+1;j<phone_book.length;j++){
-                if(phone_book[j].startsWith(phone_book[i])){
-                    answer=false;
-                    break A;
-                }
+        for(int i=1;i<phone_book.length;i++){
+            if(phone_book[i].startsWith(phone_book[i-1])){
+                answer=false;
             }
         }
         return answer;
-    }//정확성 테스트는 통과, 효율성테스트는 4개중 2개 실패(해시맵을 써야하나?)
+    }//문자열로 정렬했기 때문에 다음 문자열이 접두어가 아니면 그 뒤는 볼필요 없이 모두 접두어가 아니게 된다.(효율성 통과)
 }
