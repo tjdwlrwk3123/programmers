@@ -1,5 +1,8 @@
 package programmers;
 
+import java.util.HashMap;
+import java.util.Stack;
+
 public class Kakao1 {
 	/*
 	 * 각 열의 합을 구한후 가장 많은 r개만큼 뽑은후 인덱스번호를 구함(각 열의 합 5,4,2 중 가장 많은 2개의 인덱스번호 0,1)
@@ -45,13 +48,12 @@ public class Kakao1 {
         }
         return answer;
     }
-	public static void main(String[] args) {
-		int[] gift_cards = {4, 5, 3, 2, 1};
-		int[] wants = {2, 4, 4, 5, 1};
-		
-		int aa=howMany(gift_cards,wants);
-		System.out.println(aa);
-	}
+	
+	public static void main(String[] args) { int[] gift_cards = {4, 5, 3, 2, 1};
+	int[] wants = {2, 4, 4, 5, 1};
+	
+	int aa=howMany(gift_cards,wants); System.out.println(aa); }
+	
 	
 	/*
 	 * 
