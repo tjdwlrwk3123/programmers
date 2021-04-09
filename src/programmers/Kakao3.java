@@ -58,7 +58,8 @@ train_2.png
 5번 역을 종착역으로 정하면 열차는 1번 역 → 5번 역 → 1번 역 → ... 과 같이 움직입니다. 1번, 5번 역의 일일 이용객 수의 합은 5명이고, 이때가 최대입니다.
  */
 class Kakao3 {
-	static Queue<DpsList> q=new LinkedList<>();
+	static Queue<DpsList> q=new LinkedList<>(); //역과 인원수가 들어갈 큐 리스트 생성
+	
 	public static void main(String[] args) {
 		int n=5;
 		int[] passenger= {1,1,2,3,4};
@@ -72,21 +73,27 @@ class Kakao3 {
 		int[] answer= new int[2];
 		
 		Stack<Integer> stack=new Stack<Integer>(); //깊이탐색 스택생성
-		boolean visited[]=new boolean[n+1];
-		int[][] adjArray=new int[n+1][n+1];
+		boolean visited[]=new boolean[n+1]; //해당 역을 방문 했는지 안했는지 확인하는 부울린배열
+		int[][] adjArray=new int[n+1][n+1]; //두 역사이가 연결되어있는지 아닌지 확인하는 배열
+		//역의 개수 +1을 해야하는 이유??
 		for(int i=0;i<train.length;i++) {
 			int v1=train[i][0];
 			int v2=train[i][1];
-			adjArray[v1][v2]=1;
-			adjArray[v2][v1]=1;
+			adjArray[v1][v2]=1; //두 역사이는 서로 연결되어있음
+			adjArray[v2][v1]=1; //양방향으로 연결
 		}
+		
+		
+		
+		for(int i=2;i<=n;i++) { //2번역부터 n번역까지 반복해서 실행
+			getDps(1,i,stack,adjArray,visited,passenger);
+			//(시작역,끝역,스택,두사이가 연결된 선 배열(연결시 1),역을 지나갔는지 확인하는 배열,승객배열)
+		}
+		
 		int maxCount=0;
 		int station=0;
-		for(int i=2;i<=n;i++) {
-			getDps(1,i,stack,adjArray,visited,passenger);
-		}
-		while(!q.isEmpty()) {
-			if(q.peek().passenger>=maxCount) {
+		while(!q.isEmpty()) { //큐가 빌때까지 계속 반복
+			if(q.peek().passenger>=maxCount) { //가장 승객이 많은 경로 찾기
 				maxCount=q.peek().passenger;
 				station=q.peek().station;
 				q.poll();
@@ -99,28 +106,26 @@ class Kakao3 {
 		return answer;
 	}
 	public static void getDps(int start,int end,Stack<Integer> stack,int[][] adjArray,boolean[] visited,int[] passenger) {
-		visited[start]=true;
-		stack.push(start);
+		visited[start]=true; //시작역을 지나갔다는 표시
+		stack.push(start); //스택에 시작역을 저장
 		
-		if(start==end) {
+		if(start==end) { //반복해서 이어진 역을 지나가서 끝역이 되면
 			int allPassenger=0;
 			for(int i=0;i<stack.size();i++) {
-				allPassenger+=passenger[stack.elementAt(i)-1];
+				allPassenger+=passenger[stack.elementAt(i)-1]; //스택에 들어있는 역들에 해당하는 승객들의 합
 			}
 			DpsList dl=new DpsList(stack.elementAt(stack.size()-1), allPassenger);
 			System.out.println("승객:"+dl.passenger+",역:"+dl.station);
-			q.add(dl);
+			q.add(dl); //큐에 끝역과 승객들의 합을 저장
 			
 		}
 		for(int i=1; i<=adjArray.length-1;i++) {
-			if(adjArray[start][i]==1 && !visited[i]) {
-				getDps(i,end,stack,adjArray,visited,passenger);
-				visited[i]=false;
+			if(adjArray[start][i]==1 && !visited[i]) { //다음에 연결된 역이 있고, 그 역을 방문하지 않았으면
+				getDps(i,end,stack,adjArray,visited,passenger); //시작역을 i로 잡고 다시 반복
+				visited[i]=false; //모든 역을 다시 빠져나오면서 false로 바꿈
 			}
 		}
-		stack.pop();
-		
-		
+		stack.pop(); //모든 역을 다시 빠져나오면서 역 정보를 없애기
 	}
 	static class DpsList{
 		int station;
