@@ -128,3 +128,16 @@ ORDER BY DATETIME
 WHERE ROWNUM<4
 ]]>
 </select>
+
+<!-- 입양을 간 동물 중, 보호 기간이 가장 길었던 동물 두 마리의 아이디와 이름을 조회하는 SQL문을 작성해주세요. 이때 결과는 보호 기간이 긴 순으로 조회해야 합니다. -->
+<select>
+SELECT ANIMAL_ID,NAME FROM(
+SELECT ANIMAL_OUTS.ANIMAL_ID,ANIMAL_OUTS.NAME,ANIMAL_OUTS.DATETIME-ANIMAL_INS.DATETIME AS 보호기간 
+FROM ANIMAL_OUTS INNER JOIN ANIMAL_INS
+ON ANIMAL_OUTS.ANIMAL_ID = ANIMAL_INS.ANIMAL_ID
+ORDER BY 보호기간 DESC
+)
+<![CDATA[
+WHERE ROWNUM<3
+]]>
+</select>
