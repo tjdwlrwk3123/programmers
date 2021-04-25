@@ -153,6 +153,6 @@ ID, CART_ID, NAME, PRICE는 각각 테이블의 아이디, 장바구니의 아�
 SELECT CART_ID FROM CART_PRODUCTS
 WHERE NAME IN('Milk','Yogurt') <!-- 우유와 요거트를 산 모든 카트아이디 조회 -->
 GROUP BY CART_ID <!-- 카트아이디별로 그룹 -->
-HAVING COUNT(DISTINCT NAME) = 2 <!-- 상품명을 기준으로 중복을 제거할 때  중복값이 2개인(우유와 요거트 둘다 산) 카트아이디 조회 -->
+HAVING COUNT(DISTINCT NAME) = 2 <!-- 상품명을 기준으로 중복을 제거할 때  중복값이 2개인(우유와 요거트 둘다 산) 카트아이디만 조회 -->
 ORDER BY CART_ID
 </select>
