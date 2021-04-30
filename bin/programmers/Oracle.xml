@@ -76,3 +76,83 @@ ORDER BY HOUR
 <select>
 SELECT COUNT(DISTINCT(NAME)) AS COUNT FROM ANIMAL_INS WHERE NAME IS NOT NULL
 </select>
+
+<!-- 동물 보호소에 들어온 동물 이름 중 두 번 이상 쓰인 이름과 해당 이름이 쓰인 횟수를 조회하는 SQL문을 작성해주세요. 
+이때 결과는 이름이 없는 동물은 집계에서 제외하며, 결과는 이름 순으로 조회해주세요. -->
+<select>
+SELECT NAME,COUNT(NAME) AS COUNT 
+FROM ANIMAL_INS GROUP BY NAME 
+HAVING COUNT(NAME)>1 
+ORDER BY NAME
+</select>
+
+<!-- ANIMAL_OUTS 테이블은 동물 보호소에서 입양 보낸 동물의 정보를 담은 테이블입니다. 
+ANIMAL_OUTS 테이블 구조는 다음과 같으며, ANIMAL_ID, ANIMAL_TYPE, DATETIME, NAME, SEX_UPON_OUTCOME는 각각
+동물의 아이디, 생물 종, 입양일, 이름, 성별 및 중성화 여부를 나타냅니다. 
+ANIMAL_OUTS 테이블의 ANIMAL_ID는 ANIMAL_INS의 ANIMAL_ID의 외래 키입니다.
+
+관리자의 실수로 일부 동물의 입양일이 잘못 입력되었습니다. 
+보호 시작일보다 입양일이 더 빠른 동물의 아이디와 이름을 조회하는 SQL문을 작성해주세요. 
+이때 결과는 보호 시작일이 빠른 순으로 조회해야합니다. -->
+
+<select>
+SELECT ANIMAL_INS.ANIMAL_ID,ANIMAL_INS.NAME FROM ANIMAL_INS INNER JOIN ANIMAL_OUTS
+ON ANIMAL_INS.ANIMAL_ID = ANIMAL_OUTS.ANIMAL_ID
+<![CDATA[
+WHERE ANIMAL_INS.DATETIME > ANIMAL_OUTS.DATETIME
+]]>
+ORDER BY ANIMAL_INS.DATETIME
+</select>
+
+
+<!-- 천재지변으로 인해 일부 데이터가 유실되었습니다. 
+입양을 간 기록은 있는데, 보호소에 들어온 기록이 없는 동물의 ID와 이름을 ID 순으로 조회하는 SQL문을 작성해주세요. -->
+
+<select>
+SELECT ANIMAL_ID,NAME FROM ANIMAL_OUTS
+WHERE ANIMAL_OUTS.ANIMAL_ID NOT IN(SELECT ANIMAL_ID FROM ANIMAL_INS)
+ORDER BY ANIMAL_ID
+</select>
+
+
+<!-- 아직 입양을 못 간 동물 중, 가장 오래 보호소에 있었던 동물 3마리의 이름과 보호 시작일을 조회하는 SQL문을 작성해주세요. 
+이때 결과는 보호 시작일 순으로 조회해야 합니다. -->
+<select>
+SELECT NAME,DATETIME 
+FROM(
+SELECT * FROM ANIMAL_INS
+WHERE ANIMAL_ID NOT IN (SELECT ANIMAL_ID FROM ANIMAL_OUTS)
+ORDER BY DATETIME
+)
+<![CDATA[
+WHERE ROWNUM<4
+]]>
+</select>
+
+<!-- 입양을 간 동물 중, 보호 기간이 가장 길었던 동물 두 마리의 아이디와 이름을 조회하는 SQL문을 작성해주세요. 이때 결과는 보호 기간이 긴 순으로 조회해야 합니다. -->
+<select>
+SELECT ANIMAL_ID,NAME FROM(
+SELECT ANIMAL_OUTS.ANIMAL_ID,ANIMAL_OUTS.NAME,ANIMAL_OUTS.DATETIME-ANIMAL_INS.DATETIME AS 보호기간 
+FROM ANIMAL_OUTS INNER JOIN ANIMAL_INS
+ON ANIMAL_OUTS.ANIMAL_ID = ANIMAL_INS.ANIMAL_ID
+ORDER BY 보호기간 DESC
+)
+<![CDATA[
+WHERE ROWNUM<3
+]]>
+</select>
+
+
+<!-- CART_PRODUCTS 테이블은 장바구니에 담긴 상품 정보를 담은 테이블입니다. 
+CART_PRODUCTS 테이블의 구조는 다음과 같으며, 
+ID, CART_ID, NAME, PRICE는 각각 테이블의 아이디, 장바구니의 아이디, 상품 종류, 가격을 나타냅니다. -->
+<!-- 데이터 분석 팀에서는 우유(Milk)와 요거트(Yogurt)를 동시에 구입한 장바구니가 있는지 알아보려 합니다. 
+우유와 요거트를 동시에 구입한 장바구니의 아이디를 조회하는 SQL 문을 작성해주세요. 이때 결과는 장바구니의 아이디 순으로 나와야 합니다. -->
+
+<select>
+SELECT CART_ID FROM CART_PRODUCTS
+WHERE NAME IN('Milk','Yogurt') <!-- 우유와 요거트를 산 모든 카트아이디 조회 -->
+GROUP BY CART_ID <!-- 카트아이디별로 그룹 -->
+HAVING COUNT(DISTINCT NAME) = 2 <!-- 상품명을 기준으로 중복을 제거할 때  중복값이 2개인(우유와 요거트 둘다 산) 카트아이디만 조회 -->
+ORDER BY CART_ID
+</select>
