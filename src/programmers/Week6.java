@@ -3,6 +3,7 @@ package programmers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Week6 {
 	/*
@@ -23,9 +24,13 @@ public class Week6 {
 	"4177252841"	4	"775841"
 	 */
 	public static void main(String[] args) {
-		String number="1231234";
-		String aa=day37(number,3);
+		/*
+		 * String number="1231234"; String aa=day37(number,3); System.out.println(aa);
+		 */
+		String[] record= {"Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"};
+		String[] aa=week6_3(record);
 		System.out.println(aa);
+		
 	}
 	static ArrayList<String> answerList=new ArrayList<>();
     public static String day37(String number, int k) {
@@ -113,6 +118,72 @@ public class Week6 {
             case 4 : answer[1]=3; break;
             case 5 : answer[1]=2; break;
             case 6 : answer[1]=1; break;
+        }
+        return answer;
+    }
+    
+    /*
+     * 
+	신입사원인 김크루는 카카오톡 오픈 채팅방을 개설한 사람을 위해, 다양한 사람들이 들어오고, 나가는 것을 지켜볼 수 있는 관리자창을 만들기로 했다. 
+	채팅방에 누군가 들어오면 다음 메시지가 출력된다.
+
+	"[닉네임]님이 들어왔습니다."
+	
+	채팅방에서 누군가 나가면 다음 메시지가 출력된다.
+	
+	"[닉네임]님이 나갔습니다."
+	
+	채팅방에서 닉네임을 변경하는 방법은 다음과 같이 두 가지이다.
+	
+	채팅방을 나간 후, 새로운 닉네임으로 다시 들어간다.
+	채팅방에서 닉네임을 변경한다.
+	닉네임을 변경할 때는 기존에 채팅방에 출력되어 있던 메시지의 닉네임도 전부 변경된다.
+	
+	채팅방에 들어오고 나가거나, 닉네임을 변경한 기록이 담긴 문자열 배열 record가 매개변수로 주어질 때, 
+	모든 기록이 처리된 후, 최종적으로 방을 개설한 사람이 보게 되는 메시지를 문자열 배열 형태로 return 하도록 solution 함수를 완성하라.
+	
+	record					
+	["Enter uid1234 Muzi", 
+	"Enter uid4567 Prodo",
+	"Leave uid1234",
+	"Enter uid1234 Prodo",
+	"Change uid4567 Ryan"]
+							result
+							["Prodo님이 들어왔습니다.", 
+							"Ryan님이 들어왔습니다.", 
+							"Prodo님이 나갔습니다.", 
+							"Prodo님이 들어왔습니다."]
+	
+     */
+    public static String[] week6_3(String[] record) {
+    	//uid와 닉네임을 담는 해시맵 생성(해시맵은 키값중복이 불가하므로 닉네임이 바뀔때마다 값이 바뀌어서 들어감)
+        HashMap<String,String> map=new HashMap<String,String>(); 
+        //채팅창 목록을 담는 리스트 생성
+        ArrayList<String> list=new ArrayList<String>();
+        for(int i=0;i<record.length;i++){
+            String[] rs=record[i].split(" ");
+            try {
+            	map.put(rs[1],rs[2]);
+            }catch(ArrayIndexOutOfBoundsException ae) { //rs[2](닉네임)이 나타나지 않는경우(Leave일때)에러처리
+            	continue;
+            }
+        }
+        for(int i=0;i<record.length;i++){
+            String[] rs=record[i].split(" ");
+            if(rs[0].equals("Enter")){
+                list.add(rs[1]+" E");
+            }else if(rs[0].equals("Leave")){
+                list.add(rs[1]+" L");
+            }
+        }
+        String[] answer=new String[list.size()];
+        for(int i=0;i<list.size();i++){
+            String[] rs=list.get(i).split(" ");
+            if(rs[1].equals("E")){
+                answer[i]=map.get(rs[0])+"님이 들어왔습니다.";
+            }else if(rs[1].equals("L")){
+                answer[i]=map.get(rs[0])+"님이 나갔습니다.";
+            }
         }
         return answer;
     }

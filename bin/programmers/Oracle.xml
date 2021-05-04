@@ -156,3 +156,16 @@ GROUP BY CART_ID <!-- 카트아이디별로 그룹 -->
 HAVING COUNT(DISTINCT NAME) = 2 <!-- 상품명을 기준으로 중복을 제거할 때  중복값이 2개인(우유와 요거트 둘다 산) 카트아이디만 조회 -->
 ORDER BY CART_ID
 </select>
+
+<!-- 보호소에서 중성화 수술을 거친 동물 정보를 알아보려 합니다. 
+보호소에 들어올 당시에는 중성화되지 않았지만(Intact), 보호소를 나갈 당시에는 중성화된 동물(Spayed,Neutered)의 아이디와 생물 종, 
+이름을 조회하는 아이디 순으로 조회하는 SQL 문을 작성해주세요. -->
+
+<select>
+SELECT ANIMAL_OUTS.ANIMAL_ID,ANIMAL_OUTS.ANIMAL_TYPE,ANIMAL_OUTS.NAME 
+FROM ANIMAL_INS INNER JOIN ANIMAL_OUTS
+ON ANIMAL_INS.ANIMAL_ID = ANIMAL_OUTS.ANIMAL_ID
+WHERE ANIMAL_INS.SEX_UPON_INTAKE LIKE '%Intact%' 
+AND (ANIMAL_OUTS.SEX_UPON_OUTCOME LIKE '%Spayed%' OR ANIMAL_OUTS.SEX_UPON_OUTCOME LIKE '%Neutered%')
+ORDER BY ANIMAL_OUTS.ANIMAL_ID;
+</select>
