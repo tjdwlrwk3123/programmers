@@ -187,4 +187,26 @@ public class Week6 {
         }
         return answer;
     }
+    public int week6_4(String s){
+        int answer = pair(s);
+        return answer;
+    }
+    public static int pair(String s){
+        while(true){
+            boolean isPair = false;
+            if(s.length()==0){
+                return 1;
+            }
+            for(int i=0;i<s.length()-1;i++){
+                if(s.substring(i,i+1).equals(s.substring(i+1,i+2))){
+                    s.replace(s.substring(i,i+1),"");
+                    s.replace(s.substring(i+1,i+2),"");
+                    isPair=true;
+                }
+            }
+            if(!isPair){
+                return 0;
+            }
+        }
+    }
 }
