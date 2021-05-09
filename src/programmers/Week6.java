@@ -27,9 +27,14 @@ public class Week6 {
 		/*
 		 * String number="1231234"; String aa=day37(number,3); System.out.println(aa);
 		 */
-		String[] record= {"Enter uid1234 Muzi", "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo","Change uid4567 Ryan"};
-		String[] aa=week6_3(record);
+		/*
+		 * String[] record= {"Enter uid1234 Muzi",
+		 * "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo"
+		 * ,"Change uid4567 Ryan"}; String[] aa=week6_3(record); System.out.println(aa);
+		 */
+		int aa=week6_4("baabaa");
 		System.out.println(aa);
+		
 		
 	}
 	static ArrayList<String> answerList=new ArrayList<>();
@@ -197,26 +202,63 @@ public class Week6 {
 	b aa baa → bb aa → aa →
 	의 순서로 문자열을 모두 제거할 수 있으므로 1을 반환합니다.
      */
-    public int week6_4(String s){
-        int answer = pair(s);
-        return answer;
-    }
-    public static int pair(String s){
+    public static int week6_4(String s){
+    	StringBuffer str=new StringBuffer(s);
         while(true){
             boolean isPair = false;
-            if(s.length()==0){
+            System.out.println(str);
+            if(str.length()==0){
                 return 1;
             }
-            for(int i=0;i<s.length()-1;i++){
-                if(s.substring(i,i+1).equals(s.substring(i+1,i+2))){
-                    s.replace(s.substring(i,i+1),"");
-                    s.replace(s.substring(i+1,i+2),"");
+            for(int i=0;i<str.length()-1;i++){
+                if(str.substring(i,i+1).equals(str.substring(i+1,i+2))){
+                    str.delete(i,i+1);
+                    str.delete(i,i+1);
                     isPair=true;
+                    break;
                 }
             }
             if(!isPair){
                 return 0;
             }
         }
+    }
+    //효율성 테스트 실패...
+    
+    
+    /*
+	가로 길이가 Wcm, 세로 길이가 Hcm인 직사각형 종이가 있습니다. 
+	종이에는 가로, 세로 방향과 평행하게 격자 형태로 선이 그어져 있으며, 모든 격자칸은 1cm x 1cm 크기입니다. 
+	이 종이를 격자 선을 따라 1cm × 1cm의 정사각형으로 잘라 사용할 예정이었는데, 누군가가 이 종이를 대각선 꼭지점 2개를 잇는 방향으로 잘라 놓았습니다. 
+	그러므로 현재 직사각형 종이는 크기가 같은 직각삼각형 2개로 나누어진 상태입니다. 
+	새로운 종이를 구할 수 없는 상태이기 때문에, 이 종이에서 원래 종이의 가로, 세로 방향과 평행하게 1cm × 1cm로 잘라 사용할 수 있는 만큼만 사용하기로 하였습니다.
+	가로의 길이 W와 세로의 길이 H가 주어질 때, 사용할 수 있는 정사각형의 개수를 구하는 solution 함수를 완성해 주세요.
+
+	제한사항
+	W, H : 1억 이하의 자연수
+	
+	입출력 예
+	W	H	result
+	8	12	80
+     */
+    public long week6_5(int w, int h) {
+        long wei=(long)w;
+        long hei=(long)h;
+        long answer = 1;
+        long gcd=0;
+        for(int i=1; i<=wei && i<=hei ; i++){ //최대공약수 구하기
+            if(wei%i==0 && hei%i==0){
+                gcd=i;
+            }
+        }
+        answer=wei*hei-(wei+hei-gcd);
+        //깨진 사각형의 개수 = 가로 + 세로 - (가로 세로의 최대공약수)
+        /*
+         * 가로와 세로의 최대공약수로 나눈 서로소 w' h'가 있으면
+         * 대각선에 겹치는 정사각형의 수는 w'-1과 h'-1일때마다 추가된다.
+         * 첫 정사각형까지 합쳐서 1+w'-1+h'-1 = w'+h'-1이 된다.
+         * 여기에 처음 최대공약수를 다시 곱하면 => w + h - gcd(w,h)가 된다.
+         */
+        return answer;
     }
 }
