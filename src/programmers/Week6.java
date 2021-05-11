@@ -268,9 +268,10 @@ public class Week6 {
      */
     public static void extraLongFactorials_week6_6(int n) {
         // Write your code here
-            BigInteger factorial=new BigInteger("1");
+            BigInteger factorial=new BigInteger("1"); // BigInteger는 무한대로 숫자표현이 가능하다
             for(int i=n;i>=1;i--){
-                factorial=factorial.multiply(BigInteger.valueOf(i));
+                factorial=factorial.multiply(BigInteger.valueOf(i)); //계산할때 메소드를 써야함
+                //또한 안에 들어가는 수는 그냥 숫자가 아닌 BigInteger.valueOf(숫자)형태로 넣어야 계산할 수 있다.
             }
             System.out.println(factorial);
    }
