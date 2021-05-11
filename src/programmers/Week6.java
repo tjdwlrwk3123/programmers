@@ -1,5 +1,6 @@
 package programmers;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -261,4 +262,16 @@ public class Week6 {
          */
         return answer;
     }
+    
+    /*
+     * 팩토리얼 구하기 ( BigInteger사용법 )
+     */
+    public static void extraLongFactorials_week6_6(int n) {
+        // Write your code here
+            BigInteger factorial=new BigInteger("1");
+            for(int i=n;i>=1;i--){
+                factorial=factorial.multiply(BigInteger.valueOf(i));
+            }
+            System.out.println(factorial);
+   }
 }
