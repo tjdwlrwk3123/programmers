@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -35,8 +36,9 @@ public class Week6 {
 		 * "Enter uid4567 Prodo","Leave uid1234","Enter uid1234 Prodo"
 		 * ,"Change uid4567 Ryan"}; String[] aa=week6_3(record); System.out.println(aa);
 		 */
-		int aa=week6_4("baabaa");
-		System.out.println(aa);
+		/*
+		 * int aa=week6_4("baabaa"); System.out.println(aa);
+		 */
 		
 		
 	}
@@ -278,25 +280,41 @@ public class Week6 {
             System.out.println(factorial);
    }
     
-    public static List<Integer> climbingLeaderboard_week6_7(List<Integer> ranked, List<Integer> player) {
+    /*
+     * 기존 랭크가 들어있는 리스트 배열 ranked, 새로 갱신한 점수 배열 player가 존재할때
+     * ranked배열에 player의 각각 점수가 추가될 때의 순위를 반환하는 리스트를 작성하기
+     * 
+     * player의 모든 점수가 추가된 후에 등수계산이 아닌 각각 처리하는 것에 유의!
+     * 
+     */
+    
+    public static List<Integer> climbingLeaderboard(List<Integer> ranked, List<Integer> player) {
         // Write your code here
-        TreeSet<Integer> allList=new TreeSet<Integer>();
-        
-        for(int i=0;i<ranked.size();i++){
-            allList.add(ranked.get(i));
-        }
-        for(int i=0;i<player.size();i++){
-            allList.add(player.get(i));
-        }
-        
+        ArrayList<Integer> allList=new ArrayList<Integer>();
         List<Integer> answer=new ArrayList<Integer>();
-        for(int i=0;i<player.size();i++){
-            for(int j=0;j<allList.size();j++){
-                if(player.get(i)==allList.get(j)){
-                    
-                }
+        for(int i=0;i<ranked.size();i++){
+            if(!allList.contains(ranked.get(i))){
+                allList.add(ranked.get(i));
             }
         }
         
+        for(int i=0;i<player.size();i++){
+            boolean alrdy=true;
+            if(!allList.contains(player.get(i))){
+                allList.add(player.get(i));
+                alrdy=false;
+            }
+            Collections.sort(allList,Collections.reverseOrder());
+            for(int j=0;j<allList.size();j++){
+                if(player.get(i)==allList.get(j)){
+                    answer.add(j+1);
+                    break;
+                }
+            }
+            if(!alrdy){
+                allList.remove(player.get(i));
+            }
+        }
+        return answer;
     }
 }
