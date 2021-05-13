@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
 
 public class Week6 {
 	/*
@@ -275,4 +277,26 @@ public class Week6 {
             }
             System.out.println(factorial);
    }
+    
+    public static List<Integer> climbingLeaderboard_week6_7(List<Integer> ranked, List<Integer> player) {
+        // Write your code here
+        TreeSet<Integer> allList=new TreeSet<Integer>();
+        
+        for(int i=0;i<ranked.size();i++){
+            allList.add(ranked.get(i));
+        }
+        for(int i=0;i<player.size();i++){
+            allList.add(player.get(i));
+        }
+        
+        List<Integer> answer=new ArrayList<Integer>();
+        for(int i=0;i<player.size();i++){
+            for(int j=0;j<allList.size();j++){
+                if(player.get(i)==allList.get(j)){
+                    
+                }
+            }
+        }
+        
+    }
 }
