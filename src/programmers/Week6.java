@@ -288,7 +288,7 @@ public class Week6 {
      * 
      */
     
-    public static List<Integer> climbingLeaderboard(List<Integer> ranked, List<Integer> player) {
+    public static List<Integer> climbingLeaderboard_week6_7(List<Integer> ranked, List<Integer> player) {
         // Write your code here
         ArrayList<Integer> allList=new ArrayList<Integer>();
         List<Integer> answer=new ArrayList<Integer>();
