@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NavigableSet;
 import java.util.TreeSet;
 
 public class Week6 {
@@ -289,32 +290,35 @@ public class Week6 {
      */
     
     public static List<Integer> climbingLeaderboard_week6_7(List<Integer> ranked, List<Integer> player) {
-        // Write your code here
-        ArrayList<Integer> allList=new ArrayList<Integer>();
+    	// Write your code here
+        TreeSet<Integer> allList=new TreeSet<Integer>();
         List<Integer> answer=new ArrayList<Integer>();
         for(int i=0;i<ranked.size();i++){
-            if(!allList.contains(ranked.get(i))){
-                allList.add(ranked.get(i));
-            }
+            allList.add(ranked.get(i));
         }
-        
         for(int i=0;i<player.size();i++){
-            boolean alrdy=true;
-            if(!allList.contains(player.get(i))){
-                allList.add(player.get(i));
-                alrdy=false;
+            boolean alrdy=false;
+            if(allList.contains(player.get(i))){
+                alrdy=true;
             }
-            Collections.sort(allList,Collections.reverseOrder());
-            for(int j=0;j<allList.size();j++){
-                if(player.get(i)==allList.get(j)){
-                    answer.add(j+1);
+            allList.add(player.get(i));
+            NavigableSet<Integer> desc = allList.descendingSet();
+            int rank=1;
+            for(Integer d : desc){
+                if(d==player.get(i)){
+                    answer.add(rank);
+                    if(!alrdy){
+                        allList.remove(d);
+                    }
                     break;
                 }
+                rank++;
             }
-            if(!alrdy){
-                allList.remove(player.get(i));
-            }
+        }
+        for(Integer a : answer){
+            System.out.print(a+",");
         }
         return answer;
     }
+    //효율성 탈락, 예문 실패..
 }
