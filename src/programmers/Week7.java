@@ -1,6 +1,10 @@
 package programmers;
 
 public class Week7 {
+	public static void main(String[] args) {
+		int aa=chocolateFeast_week7_2(12,4,4);
+		System.out.println(aa);
+	}
 	/*
 	 * 숫자로 된 시간 h와 분 m이 주어질때 이를 알파벳 시간으로 변환하여 출력하기
 	 * 만약 00분일 경우는 o' clock으로,
@@ -87,5 +91,28 @@ public class Week7 {
             answer=Minute+hour;
         }
         return answer;
+    }
+	/*
+	 * 현재 가진 돈 n과 초콜릿의 가격 c가 주어진다.
+	 * 또한 초콜릿을 감싸고 있는 초콜릿 봉지를 m개 가져다 줄 경우 초콜릿 한 개와 교환이 가능하다.
+	 * 이 때 최대로 먹을 수 있는 초콜릿의 개수를 반환하여야 한다. 
+	 * 
+	 * 예시
+	 * n=15,c=3,m=2일경우
+	 * 초콜릿은 처음에 5개를 산 후, 봉지 4개를 줄 경우 초콜릿 2개를 더 먹을 수 있다.
+	 * 또한 2개의 봉지로 다시 초콜릿 한개를 먹을 수 있고,
+	 * 처음에 남은 봉지 한개와 방금 얻은 초콜릿 한개로 또 다시 초콜릿 한개를 얻을 수 있다.
+	 * 5 + 2 + 1 + 1 = 9개를 최대로 먹을 수 있다.
+	 */
+	public static int chocolateFeast_week7_2(int n, int c, int m) {
+        // Write your code here
+        int eatC = n/c; //먹은 초콜릿 개수
+        int wrap = n/c; //먹고 남은 초콜릿 봉지의 개수
+        
+        while(wrap>=m){
+            eatC+=wrap/m; //봉지를 초콜릿으로 교환한만큼 더하기
+            wrap=wrap%m+wrap/m; //남은 봉지 + 새로 교환한 초콜릿의 봉지
+        }
+        return eatC;
     }
 }
