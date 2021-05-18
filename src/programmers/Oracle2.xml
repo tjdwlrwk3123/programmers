@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+Occupations(직업)테이블에는 Name과 Occupations컬럼이 들어있다.
+이름(직업의 맨 앞글자) 형태로 추출한 후 이름순으로 정렬해서 뽑은 후
+There are a total of [occupation_count] [occupation]s.
+형태로 밑에 추가하여야 한다.
+마찬가지로 직업의 총 개수별, 직업의 이름순으로 정렬해서 출력하여야 한다.
+
+예시
+Ashely(P)
+Christeen(P)
+Jane(A)
+Jenny(D)
+Julia(A)
+Ketty(P)
+Maria(A)
+Meera(S)
+Priya(S)
+Samantha(D)
+There are a total of 2 doctors.
+There are a total of 2 singers.
+There are a total of 3 actors.
+There are a total of 3 professors.
+-->
+
+<select id="oracle week2_1">
+select name||'('||substr(occupation,1,1)||')' as name <!-- 문자열을 결합할때는 concat함수 또는 ||를 사용한다. -->
+from occupations
+order by name
+
+select case when count(occupation)>1 then <!-- case문으로 직업이 1개일때와 아닐때 s의 유무를 판단한다. -->
+'There are a total of '||count(occupation)||' '||lower(occupation)||'s.'
+else
+'There are a total of '||count(occupation)||' '||lower(occupation)||'.'
+end case
+from occupations
+group by occupation
+order by count(occupation),occupation
+</select>
