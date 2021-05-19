@@ -1,5 +1,9 @@
 package programmers;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class Week7 {
 	public static void main(String[] args) {
 		int aa=chocolateFeast_week7_2(12,4,4);
@@ -115,4 +119,36 @@ public class Week7 {
         }
         return eatC;
     }
+	/*
+	 * 정수와 문자열로 이루어진 n개의 데이터중 문자열의 절반을 "-"로 치환한 후
+	 * 나머지 정수와 문자열은 정수로 오름차순 정렬해서 문자열을 이어붙여서 출력해야한다.
+	 * 
+	 */
+	public static void countSort_week7_3(List<List<String>> arr) {
+        // Write your code here
+        for(int i=0;i<arr.size()/2;i++){ //리스트의 초반 절반을 -로 치환
+            arr.get(i).set(1,"-");
+        }
+        Collections.sort(arr,new Comparator<List<String>>(){ //compare함수를 이용해서 리스트를 정수 오름차순으로 정렬
+            @Override
+            public int compare(List<String> arg0,List<String> arg1){ //리스트 안의 리스트이기 때문에 compare이용
+                int a=Integer.parseInt(arg0.get(0));
+                int b=Integer.parseInt(arg1.get(0));
+                
+                if(a>b){
+                    return 1;
+                }else if(a==b){
+                    return 0;
+                }else{
+                    return -1;
+                }
+            }
+        });
+        String answer="";
+        for(int i=0;i<arr.size();i++){
+            answer+=arr.get(i).get(1)+" ";
+        }
+        System.out.println(answer);
+    }
+	//테스트케이스는 통과했으나, 시간효율성문제로 몇문제 실패
 }
