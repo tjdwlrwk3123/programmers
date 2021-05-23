@@ -51,3 +51,33 @@ d happens to equal the maximum value in Western Longitude (LONG_W in STATION).
 <select id="oracle week2_2">
 select round((max(lat_n)-min(lat_n))+(max(long_w)-min(long_w)),4) from station
 </select>
+
+<!-- 
+hackers 테이블 : The hacker_id is the id of the hacker, and name is the name of the hacker.
+difficulty 테이블 : difficult_level은 난이도, score는 난이도의 해당하는 최대 점수이다.
+Challenges 테이블 : challenge_id는 도전하는 사람의 아이디, hacker_id는 만든 사람의 아이디, difficulty_level은 이 테스트의 난이도이다.
+Submissions 테이블 : submission은 제출 아이디, hacker_id는 제출한 사람의 아이디, challenge_id는 도전한 사람의 아이디, score는 점수이다.
+
+Write a query to print the respective hacker_id and name of hackers
+ who achieved full scores for more than one challenge. 
+Order your output in descending order by the total number of challenges 
+in which the hacker earned a full score. 
+If more than one hacker received full scores in same number of challenges, 
+then sort them by ascending hacker_id.
+
+(두개 이상의 테스트에서 만점을 받은 사람들의 hacker_id와 name을 작성하라.
+만점의 테스트를 많이 받은 사람 순으로 정렬한 후 만약 만점의 개수가 동일하면 hacker_id를 오름차순으로 정렬하라)
+ -->
+<select id="oracle week2_3">
+select h.hacker_id,h.name
+from hackers h inner join submissions s
+on h.hacker_id = s.hacker_id
+inner join challenges c
+on c.challenge_id = s.challenge_id
+inner join difficulty d
+on c.difficulty_level = d.difficulty_level
+where s.score = d.score and c.difficulty_level = d.difficulty_level <!-- 스코어가 만점이고, 난이도도 같아야한다 -->
+group by h.hacker_id,h.name
+having count(s.hacker_id)>1
+order by count(h.hacker_id) desc,h.hacker_id asc;
+</select>
