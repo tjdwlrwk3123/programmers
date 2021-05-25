@@ -151,4 +151,43 @@ public class Week7 {
         System.out.println(answer);
     }
 	//테스트케이스는 통과했으나, 시간효율성문제로 몇문제 실패
+	
+	/*
+	 * 캥거루 A와 캥거루 B가 각각 x1의 위치와 x2의 위치에 있다.
+	 * 캥거루 A는 한번 뛸때 v1의 거리를 움직이고 캥거루 B는 v2의 거리를 움직인다.
+	 * 캥거루 A와 캥거루 B가 한번 이상 뛴 후 둘이 같은 위치에 도착한 경우가 있는지 확인해야한다.
+	 * 동시에 같은 위치에 있는 경우가 있으면 YES를 반환하고, 없으면 NO를 반환하라.
+	 * 
+	 * 예시
+	 * 0 3 4 2 => YES
+	 * 0 2 5 3 => NO
+	 * 
+	 */
+	public static String kangaroo_week7_4(int x1, int v1, int x2, int v2) {
+        // Write your code here
+        int big = 0;
+        int shortD = 0;
+        int small = 0;
+        int longD = 0;
+        if(x1>x2){
+            big=x1;
+            small=x2;
+            longD=v1;
+            shortD=v2;
+        }else{
+            big=x2;
+            small=x1;
+            longD=v2;
+            shortD=v1;
+        }
+        while(true){
+            big+=longD;
+            small+=shortD;
+            if(big==small){
+                return "YES";
+            }else if(big<small){ //둘이 겹치지 않고 거리가 작았던 것이 커지는 순간이 오면 둘은 영원히 겹치지 않는다.
+                return "NO";
+            }
+        }
+    }
 }
